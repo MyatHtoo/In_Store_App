@@ -45,9 +45,9 @@ const MapScreen = ({ navigation }) => {
 
     return (
       <View style={styles.mapContainer}>
-        <Svg width="100%" height="350" viewBox="0 0 380 320">
+        <Svg width="100%" height="400" viewBox="0 0 380 380">
           {/* Background */}
-          <Rect x="0" y="0" width="380" height="320" fill="#f9f9f9" />
+          <Rect x="0" y="0" width="380" height="380" fill="#f9f9f9" />
           
           {/* Store sections */}
           {currentSections.map((section) => (
@@ -62,33 +62,99 @@ const MapScreen = ({ navigation }) => {
                 rx="8"
                 onPress={() => setSelectedSection(section.id)}
               />
-              <SvgText
-                x={section.x + section.width / 2}
-                y={section.y + section.height / 2}
-                fill="white"
-                fontSize="14"
-                fontWeight="bold"
-                textAnchor="middle"
-                alignmentBaseline="middle"
-              >
-                {section.name}
-              </SvgText>
+              {section.name === 'Home & Garden' ? (
+                <>
+                  <SvgText
+                    x={section.x + section.width / 2}
+                    y={section.y + section.height / 2 - 8}
+                    fill="white"
+                    fontSize="14"
+                    fontWeight="bold"
+                    textAnchor="middle"
+                    alignmentBaseline="middle"
+                  >
+                    Home &
+                  </SvgText>
+                  <SvgText
+                    x={section.x + section.width / 2}
+                    y={section.y + section.height / 2 + 8}
+                    fill="white"
+                    fontSize="14"
+                    fontWeight="bold"
+                    textAnchor="middle"
+                    alignmentBaseline="middle"
+                  >
+                    Garden
+                  </SvgText>
+                </>
+              ) : (
+                <SvgText
+                  x={section.x + section.width / 2}
+                  y={section.y + section.height / 2}
+                  fill="white"
+                  fontSize="14"
+                  fontWeight="bold"
+                  textAnchor="middle"
+                  alignmentBaseline="middle"
+                >
+                  {section.name}
+                </SvgText>
+              )}
             </React.Fragment>
           ))}
 
           {/* Pathway */}
           <Rect x="170" y="10" width="20" height="300" fill="#e0e0e0" />
+          <SvgText
+            x="180"
+            y="160"
+            fill="#999"
+            fontSize="10"
+            fontWeight="600"
+            textAnchor="middle"
+            transform="rotate(-90 180 160)"
+          >
+            PATHWAY
+          </SvgText>
 
-          {/* Amenities */}
-          {amenities.map((amenity, index) => (
-            <Circle
-              key={index}
-              cx={amenity.x}
-              cy={amenity.y}
-              r="15"
-              fill="#666"
-            />
-          ))}
+          {/* Amenities with labels */}
+          {amenities.map((amenity, index) => {
+            const iconMap = {
+              'Exit': 'E',
+              'Food Court': 'F',
+              'First Aid': '+'
+            };
+            return (
+              <React.Fragment key={index}>
+                <Circle
+                  cx={amenity.x}
+                  cy={amenity.y}
+                  r="15"
+                  fill="#666"
+                />
+                <SvgText
+                  x={amenity.x}
+                  y={amenity.y + 4}
+                  fill="white"
+                  fontSize="14"
+                  fontWeight="bold"
+                  textAnchor="middle"
+                >
+                  {iconMap[amenity.name]}
+                </SvgText>
+                <SvgText
+                  x={amenity.x}
+                  y={amenity.y - 20}
+                  fill="#333"
+                  fontSize="10"
+                  fontWeight="600"
+                  textAnchor="middle"
+                >
+                  {amenity.name}
+                </SvgText>
+              </React.Fragment>
+            );
+          })}
 
           {/* Entrance */}
           <Path
@@ -105,6 +171,29 @@ const MapScreen = ({ navigation }) => {
           >
             Entrance
           </SvgText>
+
+          {/* Legend integrated into map */}
+          <Rect x="5" y="325" width="370" height="50" fill="white" rx="8" opacity="0.98" stroke="#e0e0e0" strokeWidth="1" />
+          
+          {/* Exit icon and label */}
+          <Circle cx="20" cy="345" r="7" fill="#666" />
+          <SvgText x="32" y="348" fill="#333" fontSize="10" fontWeight="500">Exit</SvgText>
+          
+          {/* Food Court icon and label */}
+          <Circle cx="75" cy="345" r="7" fill="#666" />
+          <SvgText x="87" y="348" fill="#333" fontSize="10" fontWeight="500">Food</SvgText>
+          
+          {/* First Aid icon and label */}
+          <Circle cx="140" cy="345" r="7" fill="#666" />
+          <SvgText x="152" y="348" fill="#333" fontSize="10" fontWeight="500">First Aid</SvgText>
+          
+          {/* Pathway indicator */}
+          <Rect x="210" y="338" width="18" height="14" fill="#e0e0e0" rx="2" />
+          <SvgText x="233" y="348" fill="#333" fontSize="10" fontWeight="500">Pathway</SvgText>
+          
+          {/* Entrance indicator */}
+          <Path d="M 293 340 L 287 350 L 299 350 Z" fill="#34C759" />
+          <SvgText x="305" y="348" fill="#333" fontSize="10" fontWeight="500">Entrance</SvgText>
         </Svg>
       </View>
     );
@@ -145,23 +234,6 @@ const MapScreen = ({ navigation }) => {
 
       {/* Map */}
       {renderStoreMap()}
-
-      {/* Legend */}
-      <View style={styles.legend}>
-        <Text style={styles.legendTitle}>Legend</Text>
-        <View style={styles.legendItems}>
-          {amenities.map((amenity, index) => (
-            <View key={index} style={styles.legendItem}>
-              <Ionicons name={amenity.icon} size={20} color="#666" />
-              <Text style={styles.legendText}>{amenity.name}</Text>
-            </View>
-          ))}
-          <View style={styles.legendItem}>
-            <View style={styles.pathwayIndicator} />
-            <Text style={styles.legendText}>Pathway</Text>
-          </View>
-        </View>
-      </View>
 
       {/* Quick Navigation */}
       <View style={styles.quickNav}>
@@ -240,36 +312,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 10,
     alignItems: 'center',
-  },
-  legend: {
-    backgroundColor: '#fff',
-    margin: 20,
-    padding: 15,
-    borderRadius: 12,
-  },
-  legendTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 10,
-  },
-  legendItems: {
-    gap: 8,
-  },
-  legendItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  legendText: {
-    fontSize: 14,
-    color: '#666',
-  },
-  pathwayIndicator: {
-    width: 20,
-    height: 20,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 4,
   },
   quickNav: {
     backgroundColor: '#fff',
