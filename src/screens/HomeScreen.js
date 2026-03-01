@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,13 @@ import {
   Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { PRODUCTS } from '../constants/data';
 
 const HomeScreen = ({ navigation }) => {
+  const [promotionsExpanded, setPromotionsExpanded] = useState(true);
+  const [ecoFriendlyExpanded, setEcoFriendlyExpanded] = useState(true);
+  const [clearanceExpanded, setClearanceExpanded] = useState(true);
+
   const categories = [
     { id: 1, name: 'Electronics', icon: 'laptop-outline', color: '#4A90E2' },
     { id: 2, name: 'Clothing', icon: 'shirt-outline', color: '#E94B3C' },
@@ -19,11 +24,57 @@ const HomeScreen = ({ navigation }) => {
     { id: 6, name: 'Pharmacy', icon: 'medkit-outline', color: '#E74C3C' },
   ];
 
-  const featuredProducts = [
-    { id: 1, name: 'Wireless Headphones', location: 'Aisle 3A', price: '฿89.99', section: 'Electronics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400' },
-    { id: 2, name: 'Running Shoes', location: 'Aisle 7B', price: '฿129.99', section: 'Sports', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400' },
-    { id: 3, name: 'Smart Watch', location: 'Aisle 3C', price: '฿299.99', section: 'Electronics', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400' },
-  ];
+  const promotionProducts = PRODUCTS.filter(p => p.isPromotion);
+  const ecoFriendlyProducts = PRODUCTS.filter(p => p.isEcoFriendly);
+  const nearExpiredProducts = PRODUCTS.filter(p => p.isNearExpired);
+
+  const renderProductCard = (product, badgeConfig) => (
+    <TouchableOpacity
+      key={product.id}
+      style={styles.productCard}
+      onPress={() => navigation.navigate('ProductDetail', { product })}
+    >
+      <Image
+        source={{ uri: product.image }}
+        style={styles.productImage}
+        resizeMode="cover"
+      />
+      <View style={styles.productInfo}>
+        <View style={styles.productHeader}>
+          <Text style={styles.productName}>{product.name}</Text>
+          {badgeConfig && (
+            <View style={[styles.badge, { backgroundColor: badgeConfig.color }]}>
+              <Ionicons name={badgeConfig.icon} size={12} color="#fff" />
+              <Text style={styles.badgeText}>{badgeConfig.text}</Text>
+            </View>
+          )}
+        </View>
+        <Text style={styles.productLocation}>
+          <Ionicons name="location" size={14} color="#666" /> {product.location}
+        </Text>
+        <View style={styles.priceRow}>
+          {product.originalPrice && (
+            <Text style={styles.originalPrice}>{product.originalPrice}</Text>
+          )}
+          <Text style={styles.productPrice}>{product.price}</Text>
+          {product.discountPercent && (
+            <View style={styles.discountBadge}>
+              <Text style={styles.discountText}>-{product.discountPercent}%</Text>
+            </View>
+          )}
+        </View>
+      </View>
+      <TouchableOpacity
+        style={styles.navigateButton}
+        onPress={(e) => {
+          e.stopPropagation();
+          navigation.navigate('Navigation', { product });
+        }}
+      >
+        <Ionicons name="navigate" size={20} color="#007AFF" />
+      </TouchableOpacity>
+    </TouchableOpacity>
+  );
 
   return (
     <ScrollView style={styles.container}>
@@ -73,35 +124,89 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
 
-      {/* Featured Products */}
+      {/* Promotions */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Featured Products</Text>
-        {featuredProducts.map((product) => (
-          <TouchableOpacity
-            key={product.id}
-            style={styles.productCard}
-            onPress={() => navigation.navigate('ProductDetail', { product })}
-          >
-            <Image
-              source={{ uri: product.image }}
-              style={styles.productImage}
-              resizeMode="cover"
-            />
-            <View style={styles.productInfo}>
-              <Text style={styles.productName}>{product.name}</Text>
-              <Text style={styles.productLocation}>
-                <Ionicons name="location" size={14} color="#666" /> {product.location}
-              </Text>
-              <Text style={styles.productPrice}>{product.price}</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.navigateButton}
-              onPress={() => navigation.navigate('Navigation', { product })}
-            >
-              <Ionicons name="navigate" size={20} color="#007AFF" />
-            </TouchableOpacity>
-          </TouchableOpacity>
-        ))}
+        <TouchableOpacity 
+          style={styles.sectionHeader}
+          onPress={() => setPromotionsExpanded(!promotionsExpanded)}
+          activeOpacity={0.7}
+        >
+          <View style={styles.sectionHeaderLeft}>
+            <Ionicons name="pricetag" size={24} color="#FF3B30" />
+            <Text style={[styles.sectionTitle, { marginLeft: 8, marginBottom: 0 }]}>Special Promotions</Text>
+          </View>
+          <Ionicons 
+            name={promotionsExpanded ? "chevron-up" : "chevron-down"} 
+            size={24} 
+            color="#666" 
+          />
+        </TouchableOpacity>
+        {promotionsExpanded && (
+          <View>
+            <Text style={styles.sectionSubtitle}>Limited time offers</Text>
+            {promotionProducts.map((product) => renderProductCard(product, null))}
+          </View>
+        )}
+      </View>
+
+      {/* Divider */}
+      <View style={styles.divider} />
+
+      {/* Eco-Friendly Products */}
+      <View style={styles.section}>
+        <TouchableOpacity 
+          style={styles.sectionHeader}
+          onPress={() => setEcoFriendlyExpanded(!ecoFriendlyExpanded)}
+          activeOpacity={0.7}
+        >
+          <View style={styles.sectionHeaderLeft}>
+            <Ionicons name="leaf" size={24} color="#34C759" />
+            <Text style={[styles.sectionTitle, { marginLeft: 8, marginBottom: 0 }]}>Eco-Friendly Products</Text>
+          </View>
+          <Ionicons 
+            name={ecoFriendlyExpanded ? "chevron-up" : "chevron-down"} 
+            size={24} 
+            color="#666" 
+          />
+        </TouchableOpacity>
+        {ecoFriendlyExpanded && (
+          <View>
+            <Text style={styles.sectionSubtitle}>Sustainable and environmentally friendly</Text>
+            {ecoFriendlyProducts.map((product) => renderProductCard(product, {
+              icon: 'leaf',
+              text: 'ECO',
+              color: '#34C759'
+            }))}
+          </View>
+        )}
+      </View>
+
+      {/* Divider */}
+      <View style={styles.divider} />
+
+      {/* Near-Expired Discount */}
+      <View style={styles.section}>
+        <TouchableOpacity 
+          style={styles.sectionHeader}
+          onPress={() => setClearanceExpanded(!clearanceExpanded)}
+          activeOpacity={0.7}
+        >
+          <View style={styles.sectionHeaderLeft}>
+            <Ionicons name="time" size={24} color="#FF9500" />
+            <Text style={[styles.sectionTitle, { marginLeft: 8, marginBottom: 0 }]}>Clearance Sale</Text>
+          </View>
+          <Ionicons 
+            name={clearanceExpanded ? "chevron-up" : "chevron-down"} 
+            size={24} 
+            color="#666" 
+          />
+        </TouchableOpacity>
+        {clearanceExpanded && (
+          <View>
+            <Text style={styles.sectionSubtitle}>Quick sale - grab them before they're gone!</Text>
+            {nearExpiredProducts.map((product) => renderProductCard(product, null))}
+          </View>
+        )}
       </View>
 
       {/* Store Info */}
@@ -171,11 +276,32 @@ const styles = StyleSheet.create({
   section: {
     padding: 20,
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  sectionHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 15,
+  },
+  sectionSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 15,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#E0E0E0',
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
   categoriesGrid: {
     flexDirection: 'row',
@@ -215,21 +341,61 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 15,
   },
+  productHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
   productName: {
     fontSize: 16,
     fontWeight: '600',
     color: '#333',
-    marginBottom: 4,
+    flex: 1,
+  },
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 4,
+    gap: 4,
+  },
+  badgeText: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: '#fff',
   },
   productLocation: {
     fontSize: 14,
     color: '#666',
-    marginBottom: 4,
+    marginBottom: 6,
+  },
+  priceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  originalPrice: {
+    fontSize: 14,
+    color: '#999',
+    textDecorationLine: 'line-through',
   },
   productPrice: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#007AFF',
+  },
+  discountBadge: {
+    backgroundColor: '#FF3B30',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  discountText: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#fff',
   },
   navigateButton: {
     padding: 8,

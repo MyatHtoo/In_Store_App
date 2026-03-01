@@ -49,10 +49,13 @@ export const PRODUCTS = [
     category: 'Electronics', 
     location: 'Aisle 3A', 
     floor: 1, 
-    price: '฿89.99', 
+    price: '฿89.99',
+    originalPrice: '฿119.99',
     inStock: true,
     image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400',
-    description: 'Premium wireless headphones with noise cancellation and superior sound quality.'
+    description: 'Premium wireless headphones with noise cancellation and superior sound quality.',
+    isPromotion: true,
+    discountPercent: 25
   },
   { 
     id: 2, 
@@ -60,10 +63,13 @@ export const PRODUCTS = [
     category: 'Sports', 
     location: 'Aisle 7B', 
     floor: 2, 
-    price: '฿129.99', 
+    price: '฿129.99',
+    originalPrice: '฿179.99',
     inStock: true,
     image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400',
-    description: 'Comfortable running shoes with excellent cushioning and support.'
+    description: 'Comfortable running shoes with excellent cushioning and support.',
+    isPromotion: true,
+    discountPercent: 28
   },
   { 
     id: 3, 
@@ -71,10 +77,13 @@ export const PRODUCTS = [
     category: 'Electronics', 
     location: 'Aisle 3C', 
     floor: 1, 
-    price: '฿299.99', 
+    price: '฿299.99',
+    originalPrice: '฿399.99',
     inStock: true,
     image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400',
-    description: 'Advanced smartwatch with fitness tracking and smartphone integration.'
+    description: 'Advanced smartwatch with fitness tracking and smartphone integration.',
+    isPromotion: true,
+    discountPercent: 25
   },
   { 
     id: 4, 
@@ -85,7 +94,8 @@ export const PRODUCTS = [
     price: '฿24.99', 
     inStock: true,
     image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400',
-    description: 'Non-slip yoga mat perfect for all types of exercise.'
+    description: 'Non-slip yoga mat perfect for all types of exercise. Made from eco-friendly TPE material.',
+    isEcoFriendly: true
   },
   { 
     id: 5, 
@@ -107,7 +117,8 @@ export const PRODUCTS = [
     price: '฿3.99/lb', 
     inStock: true,
     image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400',
-    description: 'Fresh organic apples, locally sourced.'
+    description: 'Fresh organic apples, locally sourced.',
+    isEcoFriendly: true
   },
   { 
     id: 7, 
@@ -115,10 +126,14 @@ export const PRODUCTS = [
     category: 'Electronics', 
     location: 'Aisle 3B', 
     floor: 1, 
-    price: '฿59.99', 
+    price: '฿59.99',
+    originalPrice: '฿89.99',
     inStock: true,
     image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400',
-    description: 'Portable Bluetooth speaker with 360-degree sound.'
+    description: 'Portable Bluetooth speaker with 360-degree sound.',
+    isNearExpired: true,
+    expiryDate: '2026-03-15',
+    discountPercent: 33
   },
   { 
     id: 8, 
@@ -126,10 +141,14 @@ export const PRODUCTS = [
     category: 'Pharmacy', 
     location: 'Aisle 9A', 
     floor: 2, 
-    price: '฿12.99', 
+    price: '฿12.99',
+    originalPrice: '฿19.99',
     inStock: true,
     image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400',
-    description: 'Fast-acting pain relief medication.'
+    description: 'Fast-acting pain relief medication.',
+    isNearExpired: true,
+    expiryDate: '2026-03-10',
+    discountPercent: 35
   },
   { 
     id: 9, 
@@ -137,10 +156,14 @@ export const PRODUCTS = [
     category: 'Clothing', 
     location: 'Aisle 4C', 
     floor: 1, 
-    price: '฿29.99', 
+    price: '฿29.99',
+    originalPrice: '฿44.99',
     inStock: true,
     image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400',
-    description: 'Comfortable cotton t-shirts, pack of 3.'
+    description: 'Comfortable cotton t-shirts, pack of 3.',
+    isNearExpired: true,
+    expiryDate: '2026-03-20',
+    discountPercent: 33
   },
   { 
     id: 10, 
@@ -151,7 +174,8 @@ export const PRODUCTS = [
     price: '฿45.99', 
     inStock: true,
     image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400',
-    description: 'Essential garden tools set with ergonomic handles.'
+    description: 'Essential garden tools set with ergonomic handles. Made from recycled materials.',
+    isEcoFriendly: true
   },
 ];
 
