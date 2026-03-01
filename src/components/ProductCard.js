@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const ProductCard = ({ product, onPress, onNavigate, showNavigate = true }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={0.7}>
-      <View style={styles.iconContainer}>
-        <Ionicons name="cube-outline" size={40} color="#007AFF" />
-      </View>
+      <Image
+        source={{ uri: product.image }}
+        style={styles.productImage}
+        resizeMode="cover"
+      />
       
       <View style={styles.details}>
         <Text style={styles.name} numberOfLines={1}>
@@ -57,13 +59,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 12,
   },
-  iconContainer: {
+  productImage: {
     width: 60,
     height: 60,
     backgroundColor: '#f0f0f0',
     borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   details: {
     flex: 1,

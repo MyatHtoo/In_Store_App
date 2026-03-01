@@ -49,8 +49,9 @@ export const PRODUCTS = [
     category: 'Electronics', 
     location: 'Aisle 3A', 
     floor: 1, 
-    price: '$89.99', 
+    price: '฿89.99', 
     inStock: true,
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400',
     description: 'Premium wireless headphones with noise cancellation and superior sound quality.'
   },
   { 
@@ -59,8 +60,9 @@ export const PRODUCTS = [
     category: 'Sports', 
     location: 'Aisle 7B', 
     floor: 2, 
-    price: '$129.99', 
+    price: '฿129.99', 
     inStock: true,
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400',
     description: 'Comfortable running shoes with excellent cushioning and support.'
   },
   { 
@@ -69,8 +71,9 @@ export const PRODUCTS = [
     category: 'Electronics', 
     location: 'Aisle 3C', 
     floor: 1, 
-    price: '$299.99', 
+    price: '฿299.99', 
     inStock: true,
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400',
     description: 'Advanced smartwatch with fitness tracking and smartphone integration.'
   },
   { 
@@ -79,8 +82,9 @@ export const PRODUCTS = [
     category: 'Sports', 
     location: 'Aisle 7A', 
     floor: 2, 
-    price: '$24.99', 
+    price: '฿24.99', 
     inStock: true,
+    image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400',
     description: 'Non-slip yoga mat perfect for all types of exercise.'
   },
   { 
@@ -89,8 +93,9 @@ export const PRODUCTS = [
     category: 'Home & Garden', 
     location: 'Aisle 5B', 
     floor: 1, 
-    price: '$79.99', 
+    price: '฿79.99', 
     inStock: false,
+    image: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=400',
     description: 'Programmable coffee maker with thermal carafe.'
   },
   { 
@@ -99,8 +104,9 @@ export const PRODUCTS = [
     category: 'Groceries', 
     location: 'Aisle 2C', 
     floor: 1, 
-    price: '$3.99/lb', 
+    price: '฿3.99/lb', 
     inStock: true,
+    image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400',
     description: 'Fresh organic apples, locally sourced.'
   },
   { 
@@ -109,8 +115,9 @@ export const PRODUCTS = [
     category: 'Electronics', 
     location: 'Aisle 3B', 
     floor: 1, 
-    price: '$59.99', 
+    price: '฿59.99', 
     inStock: true,
+    image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400',
     description: 'Portable Bluetooth speaker with 360-degree sound.'
   },
   { 
@@ -119,8 +126,9 @@ export const PRODUCTS = [
     category: 'Pharmacy', 
     location: 'Aisle 9A', 
     floor: 2, 
-    price: '$12.99', 
+    price: '฿12.99', 
     inStock: true,
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400',
     description: 'Fast-acting pain relief medication.'
   },
   { 
@@ -129,8 +137,9 @@ export const PRODUCTS = [
     category: 'Clothing', 
     location: 'Aisle 4C', 
     floor: 1, 
-    price: '$29.99', 
+    price: '฿29.99', 
     inStock: true,
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400',
     description: 'Comfortable cotton t-shirts, pack of 3.'
   },
   { 
@@ -139,8 +148,9 @@ export const PRODUCTS = [
     category: 'Home & Garden', 
     location: 'Aisle 5D', 
     floor: 1, 
-    price: '$45.99', 
+    price: '฿45.99', 
     inStock: true,
+    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400',
     description: 'Essential garden tools set with ergonomic handles.'
   },
 ];

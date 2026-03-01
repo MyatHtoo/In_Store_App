@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
+  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -17,16 +18,16 @@ const SearchScreen = ({ navigation, route }) => {
   const categories = ['All', 'Electronics', 'Clothing', 'Groceries', 'Home & Garden', 'Sports', 'Pharmacy'];
 
   const allProducts = [
-    { id: 1, name: 'Wireless Headphones', category: 'Electronics', location: 'Aisle 3A', floor: 1, price: '$89.99', inStock: true },
-    { id: 2, name: 'Running Shoes', category: 'Sports', location: 'Aisle 7B', floor: 2, price: '$129.99', inStock: true },
-    { id: 3, name: 'Smart Watch', category: 'Electronics', location: 'Aisle 3C', floor: 1, price: '$299.99', inStock: true },
-    { id: 4, name: 'Yoga Mat', category: 'Sports', location: 'Aisle 7A', floor: 2, price: '$24.99', inStock: true },
-    { id: 5, name: 'Coffee Maker', category: 'Home & Garden', location: 'Aisle 5B', floor: 1, price: '$79.99', inStock: false },
-    { id: 6, name: 'Organic Apples', category: 'Groceries', location: 'Aisle 2C', floor: 1, price: '$3.99/lb', inStock: true },
-    { id: 7, name: 'Bluetooth Speaker', category: 'Electronics', location: 'Aisle 3B', floor: 1, price: '$59.99', inStock: true },
-    { id: 8, name: 'Pain Relief', category: 'Pharmacy', location: 'Aisle 9A', floor: 2, price: '$12.99', inStock: true },
-    { id: 9, name: 'T-Shirt Pack', category: 'Clothing', location: 'Aisle 4C', floor: 1, price: '$29.99', inStock: true },
-    { id: 10, name: 'Garden Tools Set', category: 'Home & Garden', location: 'Aisle 5D', floor: 1, price: '$45.99', inStock: true },
+    { id: 1, name: 'Wireless Headphones', category: 'Electronics', location: 'Aisle 3A', floor: 1, price: '฿89.99', inStock: true, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400' },
+    { id: 2, name: 'Running Shoes', category: 'Sports', location: 'Aisle 7B', floor: 2, price: '฿129.99', inStock: true, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400' },
+    { id: 3, name: 'Smart Watch', category: 'Electronics', location: 'Aisle 3C', floor: 1, price: '฿299.99', inStock: true, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400' },
+    { id: 4, name: 'Yoga Mat', category: 'Sports', location: 'Aisle 7A', floor: 2, price: '฿24.99', inStock: true, image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400' },
+    { id: 5, name: 'Coffee Maker', category: 'Home & Garden', location: 'Aisle 5B', floor: 1, price: '฿79.99', inStock: false, image: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=400' },
+    { id: 6, name: 'Organic Apples', category: 'Groceries', location: 'Aisle 2C', floor: 1, price: '฿3.99/lb', inStock: true, image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400' },
+    { id: 7, name: 'Bluetooth Speaker', category: 'Electronics', location: 'Aisle 3B', floor: 1, price: '฿59.99', inStock: true, image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400' },
+    { id: 8, name: 'Pain Relief', category: 'Pharmacy', location: 'Aisle 9A', floor: 2, price: '฿12.99', inStock: true, image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400' },
+    { id: 9, name: 'T-Shirt Pack', category: 'Clothing', location: 'Aisle 4C', floor: 1, price: '฿29.99', inStock: true, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400' },
+    { id: 10, name: 'Garden Tools Set', category: 'Home & Garden', location: 'Aisle 5D', floor: 1, price: '฿45.99', inStock: true, image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400' },
   ];
 
   const filteredProducts = allProducts.filter(product => {
@@ -40,9 +41,11 @@ const SearchScreen = ({ navigation, route }) => {
       style={styles.productItem}
       onPress={() => navigation.navigate('ProductDetail', { product: item })}
     >
-      <View style={styles.productIconContainer}>
-        <Ionicons name="cube-outline" size={40} color="#007AFF" />
-      </View>
+      <Image
+        source={{ uri: item.image }}
+        style={styles.productImage}
+        resizeMode="cover"
+      />
       <View style={styles.productDetails}>
         <Text style={styles.productName}>{item.name}</Text>
         <View style={styles.productMetaRow}>
@@ -91,32 +94,34 @@ const SearchScreen = ({ navigation, route }) => {
       </View>
 
       {/* Category Filter */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.categoriesScroll}
-        contentContainerStyle={styles.categoriesContent}
-      >
-        {categories.map((category) => (
-          <TouchableOpacity
-            key={category}
-            style={[
-              styles.categoryChip,
-              selectedCategory === category && styles.categoryChipActive,
-            ]}
-            onPress={() => setSelectedCategory(category)}
-          >
-            <Text
+      <View style={styles.categoriesWrapper}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.categoriesScroll}
+          contentContainerStyle={styles.categoriesContent}
+        >
+          {categories.map((category) => (
+            <TouchableOpacity
+              key={category}
               style={[
-                styles.categoryChipText,
-                selectedCategory === category && styles.categoryChipTextActive,
+                styles.categoryChip,
+                selectedCategory === category && styles.categoryChipActive,
               ]}
+              onPress={() => setSelectedCategory(category)}
             >
-              {category}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+              <Text
+                style={[
+                  styles.categoryChipText,
+                  selectedCategory === category && styles.categoryChipTextActive,
+                ]}
+              >
+                {category}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
 
       {/* Results Count */}
       <View style={styles.resultsHeader}>
@@ -177,12 +182,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  categoriesWrapper: {
+    paddingHorizontal: 20,
+  },
   categoriesScroll: {
     maxHeight: 50,
+    marginBottom: 10,
   },
   categoriesContent: {
-    paddingHorizontal: 20,
-    gap: 8,
+    paddingRight: 20,
   },
   categoryChip: {
     paddingHorizontal: 16,
@@ -191,6 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#e0e0e0',
+    marginRight: 8,
   },
   categoryChipActive: {
     backgroundColor: '#007AFF',
@@ -225,13 +234,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     alignItems: 'center',
   },
-  productIconContainer: {
+  productImage: {
     width: 60,
     height: 60,
     backgroundColor: '#f0f0f0',
     borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   productDetails: {
     flex: 1,

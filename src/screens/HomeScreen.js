@@ -20,9 +20,9 @@ const HomeScreen = ({ navigation }) => {
   ];
 
   const featuredProducts = [
-    { id: 1, name: 'Wireless Headphones', location: 'Aisle 3A', price: '$89.99', section: 'Electronics' },
-    { id: 2, name: 'Running Shoes', location: 'Aisle 7B', price: '$129.99', section: 'Sports' },
-    { id: 3, name: 'Smart Watch', location: 'Aisle 3C', price: '$299.99', section: 'Electronics' },
+    { id: 1, name: 'Wireless Headphones', location: 'Aisle 3A', price: '฿89.99', section: 'Electronics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400' },
+    { id: 2, name: 'Running Shoes', location: 'Aisle 7B', price: '฿129.99', section: 'Sports', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400' },
+    { id: 3, name: 'Smart Watch', location: 'Aisle 3C', price: '฿299.99', section: 'Electronics', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400' },
   ];
 
   return (
@@ -82,9 +82,11 @@ const HomeScreen = ({ navigation }) => {
             style={styles.productCard}
             onPress={() => navigation.navigate('ProductDetail', { product })}
           >
-            <View style={styles.productImagePlaceholder}>
-              <Ionicons name="pricetag" size={40} color="#ccc" />
-            </View>
+            <Image
+              source={{ uri: product.image }}
+              style={styles.productImage}
+              resizeMode="cover"
+            />
             <View style={styles.productInfo}>
               <Text style={styles.productName}>{product.name}</Text>
               <Text style={styles.productLocation}>
@@ -203,13 +205,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     alignItems: 'center',
   },
-  productImagePlaceholder: {
+  productImage: {
     width: 60,
     height: 60,
     backgroundColor: '#f0f0f0',
     borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   productInfo: {
     flex: 1,

@@ -22,9 +22,9 @@ const ProductDetailScreen = ({ navigation, route }) => {
   ];
 
   const relatedProducts = [
-    { id: 1, name: 'USB-C Cable', price: '$12.99' },
-    { id: 2, name: 'Phone Case', price: '$24.99' },
-    { id: 3, name: 'Screen Protector', price: '$9.99' },
+    { id: 7, name: 'Bluetooth Speaker', price: '฿59.99', image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400' },
+    { id: 3, name: 'Smart Watch', price: '฿299.99', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400' },
+    { id: 4, name: 'Yoga Mat', price: '฿24.99', image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400' },
   ];
 
   return (
@@ -32,9 +32,11 @@ const ProductDetailScreen = ({ navigation, route }) => {
       <ScrollView style={styles.scrollView}>
         {/* Product Image */}
         <View style={styles.imageContainer}>
-          <View style={styles.imagePlaceholder}>
-            <Ionicons name="cube" size={80} color="#007AFF" />
-          </View>
+          <Image
+            source={{ uri: product.image }}
+            style={styles.productImage}
+            resizeMode="cover"
+          />
           <TouchableOpacity
             style={styles.favoriteButton}
             onPress={() => setIsFavorite(!isFavorite)}
@@ -128,9 +130,11 @@ const ProductDetailScreen = ({ navigation, route }) => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.relatedScroll}>
               {relatedProducts.map((item) => (
                 <TouchableOpacity key={item.id} style={styles.relatedItem}>
-                  <View style={styles.relatedImage}>
-                    <Ionicons name="cube-outline" size={30} color="#ccc" />
-                  </View>
+                  <Image
+                    source={{ uri: item.image }}
+                    style={styles.relatedProductImage}
+                    resizeMode="cover"
+                  />
                   <Text style={styles.relatedName}>{item.name}</Text>
                   <Text style={styles.relatedPrice}>{item.price}</Text>
                 </TouchableOpacity>
@@ -196,13 +200,11 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
     position: 'relative',
   },
-  imagePlaceholder: {
+  productImage: {
     width: 200,
     height: 200,
     backgroundColor: '#f0f0f0',
     borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   favoriteButton: {
     position: 'absolute',
@@ -338,13 +340,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
   },
-  relatedImage: {
+  relatedProductImage: {
     width: '100%',
     aspectRatio: 1,
     backgroundColor: '#f0f0f0',
     borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
     marginBottom: 8,
   },
   relatedName: {
